@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | Biohealth</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Biohealth</a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="conseils.html">Conseils & Recettes</a>
+                <a href="marketplace.html" class="active">Marketplace</a>
+                <a href="nutritionniste.html">Suivi Nutritionniste</a>
+            </div>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Marketplace alimentaire</h1>
+            <p>Découvrez des produits locaux adaptés à vos besoins de santé.</p>
+        </div>
+    </section>
+
+    <!-- Marketplace Filter -->
+    <section class="marketplace-filter">
+        <div class="container">
+            <div class="filter-content">
+                <div class="search-box">
+                    <input type="text" placeholder="Rechercher un produit...">
+                    <button class="search-btn">Rechercher</button>
+                </div>
+                <div class="filter-options">
+                    <select id="categoryFilter">
+                        <option value="">Toutes catégories</option>
+                        <option value="cereales">Céréales</option>
+                        <option value="legumes">Légumes</option>
+                        <option value="viande">Viande</option>
+                        <option value="poisson">Poisson</option>
+                        <option value="complements">Compléments</option>
+                    </select>
+                    <select id="regionFilter">
+                        <option value="">Toutes régions</option>
+                        <option value="europe">Europe</option>
+                        <option value="afrique">Afrique</option>
+                        <option value="asie">Asie</option>
+                        <option value="amerique">Amérique</option>
+                    </select>
+                    <button class="btn secondary" id="nearMeFilter">Près de moi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products">
+        <div class="container">
+            <div class="products-grid">
+                <!-- Product cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Votre commande</h2>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="cart-total">
+                <p>Total: <span id="cartTotal">0</span> XOF</p>
+                <button class="btn primary" id="checkoutBtn">Passer la commande</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Biohealth</h3>
+                    <p>Se soigner par l'alimentation locale adaptée à votre santé.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="conseils.html">Conseils & Recettes</a></li>
+                        <li><a href="marketplace.html">Marketplace</a></li>
+                        <li><a href="nutritionniste.html">Suivi Nutritionniste</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>contact@biohealth.app</p>
+                    <p>+33 6 12 34 56 78</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Biohealth. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/geo.js"></script>
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "Farine de Sorgho",
+                description: "La farine de sorgho est très riche en fer. Elle apporte un véritable coup de boost à l'organisme",
+                price: 500,
+                image: "images/sorgho.jpg",
+                category: "cereales",
+                region: "afrique",
+                healthBenefits: ["Sans gluten", "Riche en protéines", "Faible IG"]
+            },
+            {
+                id: 2,
+                name: "Mil africain",
+                description: "Millet traditionnel riche en fer et magnésium.",
+                price: 3.49,
+                image: "images/mil.webp",
+                category: "cereales",
+                region: "afrique",
+                healthBenefits: ["Sans gluten", "Riche en minéraux", "Digeste"]
+            },
+            {
+                id: 3,
+                name: "Tilapia frais",
+                description: "Poisson pêché localement, riche en oméga-3.",
+                price: 2000,
+                image: "images/tilapia.jpg",
+                category: "poisson",
+                region: "afrique",
+                healthBenefits: ["Riche en oméga-3", "Protéines maigres", "Vitamine D"]
+            },
+            {
+                id: 4,
+                name: "Poulet fermier",
+                description: "Poulet élevé en plein air, sans antibiotiques.",
+                price: 3000,
+                image: "images/poulet.jpg",
+                category: "viande",
+                region: "europe",
+                healthBenefits: ["Protéines complètes", "Fer héminique", "Vitamine B12"]
+            },
+            {
+                id: 5,
+                name: "Légumes de saison",
+                description: "Panier de légumes locaux de saison.",
+                price: 3000,
+                image: "images/legume.jpg",
+                category: "legumes",
+                region: "europe",
+                healthBenefits: ["Fibres", "Vitamines", "Antioxydants"]
+            },
+            {
+                id: 6,
+                name: "Germe de blé",
+                description: "Complément alimentaire riche en protéines et fer.",
+                price: 1000,
+                image: "images/ble.webp",
+                category: "cereales",
+                region: "afrique",
+                healthBenefits: ["Riche en protéines", "Fer végétal", "bon pour la mémoire"]
+            },
+            {
+                id: 7,
+                name: "Riz complet asiatique",
+                description: "Riz complet traditionnel à faible index glycémique.",
+                price: 2500,
+                image: "images/riz.jpg",
+                category: "cereales",
+                region: "asie",
+                healthBenefits: ["Fibres", "Magnésium", "Faible IG"]
+            },
+            {
+                id: 8,
+                name: "Baies de goji",
+                description: "Baies séchées riches en antioxydants.",
+                price: 4500,
+                image: "images/goji.jpg",
+                category: "complements",
+                region: "asie",
+                healthBenefits: ["Antioxydants", "Vitamine C", "Bêta-carotène"]
+            }
+        ];
+
+        // Display products
+        document.addEventListener('DOMContentLoaded', function() {
+            const productsGrid = document.querySelector('.products-grid');
+            let cart = JSON.parse(localStorage.getItem('biohealthCart')) || [];
+            
+            // Render all products initially
+            renderProducts(products);
+            
+            // Filter functionality
+            document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+            document.getElementById('regionFilter').addEventListener('change', filterProducts);
+            document.getElementById('nearMeFilter').addEventListener('click', function() {
+                detectUserRegion().then(region => {
+                    document.getElementById('regionFilter').value = region;
+                    filterProducts();
+                });
+            });
+            
+            // Search functionality
+            document.querySelector('.search-btn').addEventListener('click', function() {
+                const searchTerm = document.querySelector('.search-box input').value.toLowerCase();
+                const filtered = products.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) || 
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+                renderProducts(filtered);
+            });
+            
+            // Cart modal
+            const cartModal = document.getElementById('cartModal');
+            const closeModal = document.querySelector('.close-modal');
+            
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart')) {
+                    const productId = parseInt(e.target.dataset.id);
+                    addToCart(productId);
+                }
+                
+                if (e.target.id === 'cartIcon') {
+                    updateCartDisplay();
+                    cartModal.style.display = 'block';
+                }
+            });
+            
+            closeModal.addEventListener('click', function() {
+                cartModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+            });
+            
+            // Checkout
+            document.getElementById('checkoutBtn').addEventListener('click', function() {
+                alert('Fonctionnalité Premium : Pour passer commande, abonnez-vous à notre service Premium.');
+                cart = [];
+                localStorage.setItem('biohealthCart', JSON.stringify(cart));
+                updateCartDisplay();
+                cartModal.style.display = 'none';
+            });
+        });
+        
+        function renderProducts(productsToRender) {
+            const productsGrid = document.querySelector('.products-grid');
+            productsGrid.innerHTML = '';
+            
+            if (productsToRender.length === 0) {
+                productsGrid.innerHTML = '<p class="no-products">Aucun produit ne correspond à vos critères.</p>';
+                return;
+            }
+            
+            productsToRender.forEach(product => {
+                const productCard = `
+                    <div class="product-card" data-category="${product.category}" data-region="${product.region}">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                            <span class="price">${product.price.toFixed(2)} XOF</span>
+                        </div>
+                        <div class="product-content">
+                            <h3>${product.name}</h3>
+                            <p>${product.description}</p>
+                            <div class="product-benefits">
+                                ${product.healthBenefits.map(benefit => `<span class="benefit-tag">${benefit}</span>`).join('')}
+                            </div>
+                            <button class="btn primary add-to-cart" data-id="${product.id}">Ajouter au panier</button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.innerHTML += productCard;
+            });
+        }
+        
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').value;
+            const region = document.getElementById('regionFilter').value;
+            
+            let filtered = products;
+            
+            if (category) {
+                filtered = filtered.filter(product => product.category === category);
+            }
+            
+            if (region) {
+                filtered = filtered.filter(product => product.region === region);
+            }
+            
+            renderProducts(filtered);
+        }
+        
+        function addToCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('biohealthCart')) || [];
+            const product = products.find(p => p.id === productId);
+            
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('biohealthCart', JSON.stringify(cart));
+            updateCartIcon();
+            
+            // Show added notification
+            const notification = document.createElement('div');
+            notification.className = 'added-notification';
+            notification.textContent = `${product.name} ajouté au panier`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('fade-out');
+                setTimeout(() => notification.remove(), 500);
+            }, 2000);
+        }
+        
+        function updateCartIcon() {
+            const cart = JSON.parse(localStorage.getItem('biohealthCart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+        
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('biohealthCart')) || [];
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Votre panier est vide</p>';
+                cartTotal.textContent = '0';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h4>${item.name}</h4>
+                        <p>${item.price.toFixed(2)} XOF x ${item.quantity}</p>
+                    </div>
+                    <div class="item-total">${itemTotal.toFixed(2)} XOF</div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>

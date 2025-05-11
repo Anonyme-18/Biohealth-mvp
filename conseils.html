@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conseils & Recettes | Biohealth</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Biohealth</a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="conseils.html" class="active">Conseils & Recettes</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="nutritionniste.html">Suivi Nutritionniste</a>
+            </div>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Conseils & Recettes</h1>
+            <p>Découvrez des conseils nutritionnels et des recettes adaptées à votre santé et votre région.</p>
+        </div>
+    </section>
+
+    <!-- Region Filter -->
+    <section class="region-filter">
+        <div class="container">
+            <div class="filter-content">
+                <h2>Trouvez des aliments de votre région</h2>
+                <div class="filter-options">
+                    <button class="btn secondary" id="detectRegion">Détecter ma région</button>
+                    <select id="regionSelect">
+                        <option value="">Sélectionnez une région</option>
+                        <option value="europe">Europe</option>
+                        <option value="afrique">Afrique</option>
+                        <option value="asie">Asie</option>
+                        <option value="amerique">Amérique</option>
+                    </select>
+                </div>
+                <div class="region-result" id="regionResult">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Advice -->
+    <section class="daily-advice">
+        <div class="container">
+            <h2>Conseil du jour</h2>
+            <div class="advice-card">
+                <div class="advice-content">
+                    <h3 id="adviceTitle">Les bienfaits des légumes locaux de saison</h3>
+                    <p id="adviceText">Aujourd'hui, nous vous recommandons de consommer des légumes locaux de saison. Ils sont plus riches en nutriments, plus savoureux et ont un impact environnemental réduit. Selon votre région, nous vous suggérons : <span id="regionalFood">chargement...</span></p>
+                    <div class="advice-tags">
+                        <span class="tag">Nutrition</span>
+                        <span class="tag">Saison</span>
+                        <span class="tag" id="regionTag">Local</span>
+                    </div>
+                </div>
+                <div class="advice-image">
+                    <img src="images/vegetables.jpg" alt="Légumes de saison" id="adviceImage">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section class="recipes">
+        <div class="container">
+            <h2>Recettes adaptées</h2>
+            <div class="recipe-filters">
+                <button class="filter-btn active" data-filter="all">Toutes</button>
+                <button class="filter-btn" data-filter="sante">Santé spécifique</button>
+                <button class="filter-btn" data-filter="region">Ma région</button>
+                <button class="filter-btn" data-filter="rapide">Rapide</button>
+            </div>
+            <div class="recipe-grid">
+                <!-- Recipe cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Biohealth</h3>
+                    <p>Se soigner par l'alimentation locale adaptée à votre santé.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="conseils.html">Conseils & Recettes</a></li>
+                        <li><a href="marketplace.html">Marketplace</a></li>
+                        <li><a href="nutritionniste.html">Suivi Nutritionniste</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>contact@biohealth.app</p>
+                    <p>+33 6 12 34 56 78</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Biohealth. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/geo.js"></script>
+    <script>
+        // This would be replaced with actual API calls in production
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample recipe data
+            const recipes = [
+                {
+                    id: 1,
+                    title: "Bouilli de mil",
+                    description: "Une bouilli riche en protéines, parfait pour la croissance des enfants.",
+                    image: "images/mil-b.jpg",
+                    tags: ["sante", "region"],
+                    time: "25 min",
+                    ingredients: ["Farine de mil", "Sucre", "Lait",  "Eau", "Sel"]
+                },
+                {
+                    id: 2,
+                    title: "Poisson local grillé aux épices",
+                    description: "Préparation simple d'un poisson frais de votre région avec des épices locales.",
+                    image: "images/poisson.jpg",
+                    tags: ["region", "rapide"],
+                    time: "20 min",
+                    ingredients: ["Poisson local", "Citron", "Ail", "Épices locales", "Huile d'olive"]
+                },
+                {
+                    id: 3,
+                    title: "Bowl antioxydant",
+                    description: "Un mélange puissant d'aliments riches en antioxydants pour votre santé.",
+                    image: "images/bowl.webp",
+                    tags: ["sante"],
+                    time: "15 min",
+                    ingredients: ["Myrtilles", "Noix", "Épinards", "Avocat", "Graines de chia"]
+                },
+                {
+                    id: 4,
+                    title: "Soupe traditionnelle locale",
+                    description: "Une recette traditionnelle adaptée à vos besoins nutritionnels.",
+                    image: "images/soupe.webp",
+                    tags: ["region", "sante"],
+                    time: "40 min",
+                    ingredients: ["Tomates", "Oignons", "Carotes", "Choux", "Pomme de terre"]
+                }
+            ];
+
+            // Display recipes
+            const recipeGrid = document.querySelector('.recipe-grid');
+            
+            recipes.forEach(recipe => {
+                const tags = recipe.tags.join(' ');
+                const recipeCard = `
+                    <div class="recipe-card ${tags}">
+                        <div class="recipe-image">
+                            <img src="${recipe.image}" alt="${recipe.title}">
+                            <span class="time">${recipe.time}</span>
+                        </div>
+                        <div class="recipe-content">
+                            <h3>${recipe.title}</h3>
+                            <p>${recipe.description}</p>
+                            <div class="recipe-meta">
+                                <span class="ingredients-toggle">Voir les ingrédients</span>
+                                <div class="ingredients-list">
+                                    ${recipe.ingredients.map(ing => `<span>${ing}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                recipeGrid.innerHTML += recipeCard;
+            });
+
+            // Filter functionality
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    const recipeCards = document.querySelectorAll('.recipe-card');
+                    
+                    recipeCards.forEach(card => {
+                        if (filter === 'all' || card.classList.contains(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Toggle ingredients
+            document.querySelectorAll('.ingredients-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const ingredients = this.nextElementSibling;
+                    ingredients.style.display = ingredients.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            // Update advice based on region
+            document.getElementById('detectRegion').addEventListener('click', function() {
+                detectUserRegion();
+            });
+
+            document.getElementById('regionSelect').addEventListener('change', function() {
+                updateRegionalAdvice(this.value);
+            });
+
+            // Initial advice
+            updateRegionalAdvice('');
+        });
+
+        function updateRegionalAdvice(region) {
+            const adviceTitle = document.getElementById('adviceTitle');
+            const adviceText = document.getElementById('adviceText');
+            const regionalFood = document.getElementById('regionalFood');
+            const regionTag = document.getElementById('regionTag');
+            const adviceImage = document.getElementById('adviceImage');
+
+            let foodRecommendation = '';
+            let imageSrc = 'images/s-saison.jpg';
+            let title = 'Les bienfaits des légumes locaux de saison';
+            let text = 'Aujourd\'hui, nous vous recommandons de consommer des légumes locaux de saison. Ils sont plus riches en nutriments, plus savoureux et ont un impact environnemental réduit. ';
+
+            switch(region) {
+                case 'europe':
+                    foodRecommendation = 'des poireaux, des choux et des pommes de terre.';
+                    imageSrc = 'images/s-european.jpg';
+                    title = 'Les trésors nutritionnels européens';
+                    text = 'L\'Europe offre une diversité de produits locaux riches en nutriments. ';
+                    regionTag.textContent = 'Europe';
+                    break;
+                case 'afrique':
+                    foodRecommendation = 'du mil, des ignames et des feuilles de baobab.';
+                    imageSrc = 'images/s-africa.jpg';
+                    title = 'Les super-aliments africains';
+                    text = 'L\'Afrique regorge d\'aliments nutritifs souvent sous-estimés. ';
+                    regionTag.textContent = 'Afrique';
+                    break;
+                case 'asie':
+                    foodRecommendation = 'du riz complet, des légumes fermentés et du tofu.';
+                    imageSrc = 'images/s-asia.jpg';
+                    title = 'La sagesse nutritionnelle asiatique';
+                    text = 'Les traditions alimentaires asiatiques offrent des combinaisons équilibrées. ';
+                    regionTag.textContent = 'Asie';
+                    break;
+                case 'amerique':
+                    foodRecommendation = 'des patates douces, du maïs et des haricots noirs.';
+                    imageSrc = 'images/s-america.jpg';
+                    title = 'Les aliments ancestraux des Amériques';
+                    text = 'Les cultures précolombiennes nous ont légué des aliments nutritifs. ';
+                    regionTag.textContent = 'Amérique';
+                    break;
+                default:
+                    foodRecommendation = 'des produits frais de votre marché local.';
+                    regionTag.textContent = 'Local';
+            }
+
+            adviceTitle.textContent = title;
+            regionalFood.textContent = foodRecommendation;
+            adviceText.innerHTML = text + 'Selon votre région, nous vous suggérons : <span id="regionalFood">' + foodRecommendation + '</span>';
+            adviceImage.src = imageSrc;
+            adviceImage.alt = title;
+        }
+    </script>
+</body>
+</html>
