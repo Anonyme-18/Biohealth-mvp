@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Nutrition | BioHealth</title>
+     <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">BioHealth</a>
+            <div class="nav-links">
+                <a href="accueil.html" >Accueil</a>
+                <a href="conseils.html">Conseils & Recettes</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="nutritionniste.html">Suivi Nutritionniste</a>
+                 <a class="active" href="chatbot.html">Chatbot</a>
+                  <!-- <a  href="analyse.html">Analyse</a>
+                 <a  href="dashboard.html">Tableau de bord </a> -->
+            </div>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- En-tête de page -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Chatbot Nutritionnel</h1>
+            <p>Obtenez des conseils personnalisés en nutrition et santé, 24h/24</p>
+        </div>
+    </section>
+
+    <!-- Conteneur du chatbot -->
+    <div class="container">
+        <div class="chatbot-container">
+            <div class="chat-header">
+                <h3>NutriBot</h3>
+                <p>Votre assistant en nutrition intelligent</p>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages seront ajoutés ici par JavaScript -->
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Posez votre question...">
+                <button id="sendButton">➤</button>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <p>⚠️ NutriBot fournit des conseils généraux et ne remplace pas un avis médical professionnel. Consultez toujours un médecin pour des problèmes de santé spécifiques.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            
+            // Questions rapides prédéfinies
+            const quickQuestions = [
+                "Quels aliments éviter pour le diabète?",
+                "Donne-moi une recette saine",
+                "Comment réduire mon cholestérol?",
+                "Quels sont les aliments riches en fer?",
+                "Des conseils pour perdre du poids sainement?"
+            ];
+            
+            // Réponses simulées du chatbot
+            const botResponses = {
+                "salut": "Bonjour ! Je suis NutriBot, votre assistant en nutrition. Comment puis-je vous aider aujourd'hui?",
+                "quels aliments éviter pour le diabète": "Pour le diabète, il est conseillé de limiter les aliments à index glycémique élevé comme le pain blanc, les pâtes non complètes, les sucreries et les boissons sucrées. Privilégiez les fibres et les protéines.",
+                "donne-moi une recette saine": "Voici une recette simple : Salade de quinoa avec poulet grillé, avocat, tomates cerises et une vinaigrette à l'huile d'olive. Riche en protéines et bonnes graisses!",
+                "comment réduire mon cholestérol": "Pour réduire le cholestérol, augmentez votre consommation d'aliments riches en fibres solubles (avoine, légumineuses), de noix et de poissons gras. Limitez les graisses saturées.",
+                "quels sont les aliments riches en fer": "Les meilleures sources de fer sont les viandes rouges, les abats, les légumineuses, les épinards et les céréales enrichies. Associez-les à de la vitamine C pour une meilleure absorption.",
+                "des conseils pour perdre du poids sainement": "Pour une perte de poids saine : 1) Mangez plus de protéines et fibres 2) Buvez de l'eau avant les repas 3) Dormez suffisamment 4) Faites de l'exercice régulièrement 5) Évitez les régimes extrêmes."
+            };
+            
+            // Message de bienvenue initial
+            setTimeout(() => {
+                addBotMessage("Bonjour ! Je suis NutriBot, votre assistant en nutrition. Posez-moi vos questions ou choisissez une suggestion ci-dessous :");
+                
+                // Ajouter les questions rapides
+                const quickActions = document.createElement('div');
+                quickActions.className = 'quick-actions';
+                
+                quickQuestions.forEach(question => {
+                    const action = document.createElement('div');
+                    action.className = 'quick-action';
+                    action.textContent = question;
+                    action.addEventListener('click', function() {
+                        sendUserMessage(question);
+                    });
+                    quickActions.appendChild(action);
+                });
+                
+                chatMessages.appendChild(quickActions);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+            
+            // Envoyer un message avec le bouton
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Envoyer un message avec Entrée
+            messageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message !== '') {
+                    sendUserMessage(message);
+                    messageInput.value = '';
+                }
+            }
+            
+            function sendUserMessage(message) {
+                addUserMessage(message);
+                
+                // Simuler un délai de réponse
+                setTimeout(() => {
+                    const response = generateBotResponse(message);
+                    addBotMessage(response);
+                    
+                    // Réafficher les questions rapides après la réponse
+                    if (!document.querySelector('.quick-actions')) {
+                        const quickActions = document.createElement('div');
+                        quickActions.className = 'quick-actions';
+                        
+                        quickQuestions.forEach(question => {
+                            const action = document.createElement('div');
+                            action.className = 'quick-action';
+                            action.textContent = question;
+                            action.addEventListener('click', function() {
+                                sendUserMessage(question);
+                            });
+                            quickActions.appendChild(action);
+                        });
+                        
+                        chatMessages.appendChild(quickActions);
+                    }
+                    
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000 + Math.random() * 2000); // Délai aléatoire entre 1 et 3 secondes
+            }
+            
+            function addUserMessage(text) {
+                const now = new Date();
+                const timeString = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message message-user';
+                messageDiv.innerHTML = `
+                    <div class="bubble user-bubble">${text}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function addBotMessage(text) {
+                const now = new Date();
+                const timeString = now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message message-bot';
+                messageDiv.innerHTML = `
+                    <div class="bubble bot-bubble">${text}</div>
+                    <div class="message-time">${timeString}</div>
+                `;
+                
+                // Supprimer les anciennes actions rapides
+                const oldQuickActions = document.querySelector('.quick-actions');
+                if (oldQuickActions) {
+                    oldQuickActions.remove();
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function generateBotResponse(userMessage) {
+                const lowerMessage = userMessage.toLowerCase();
+                
+                // Chercher une réponse correspondante
+                for (const [key, value] of Object.entries(botResponses)) {
+                    if (lowerMessage.includes(key.toLowerCase())) {
+                        return value;
+                    }
+                }
+                
+                // Réponse par défaut
+                return "Je suis un chatbot spécialisé en nutrition. Pour des conseils médicaux précis, veuillez consulter un professionnel de santé. Puis-je vous aider avec des conseils nutritionnels généraux?";
+            }
+        });
+    </script>
+</body>
+</html>

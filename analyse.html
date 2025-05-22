@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Alimentaire | BioHealth</title>
+     <link rel="stylesheet" href="css/style.css">
+   </head>
+<body>
+    <!-- Navigation (identique aux autres pages) -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">BioHealth</a>
+           <div class="nav-links">
+                <a href="accueil.html" >Accueil</a>
+                <a href="conseils.html">Conseils & Recettes</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="nutritionniste.html">Suivi Nutritionniste</a>
+                 <a href="chatbot.html">Chatbot</a>
+                <a class="active" href="analyse.html">Analyse</a>
+                 <a  href="dashboard.html">Tableau de bord </a>
+            </div>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- En-tête de page -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Analyse Alimentaire par Photo</h1>
+            <p>Prenez une photo de votre repas et obtenez une analyse nutritionnelle instantanée</p>
+        </div>
+    </section>
+
+    <!-- Contenu principal -->
+    <section class="analysis-container container">
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-icon">
+                📷
+            </div>
+            <h3>Ajoutez une photo de votre repas</h3>
+            <p>Prenez une photo ou téléchargez une image depuis votre appareil</p>
+            <div class="action-buttons">
+                <button class="btn primary" id="takePhotoBtn">Prendre une photo</button>
+                <button class="btn primary" id="uploadPhotoBtn">Télécharger une image</button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+        </div>
+
+        <div id="previewContainer">
+            <img id="imagePreview" alt="Aperçu de l'image">
+            <button class="btn primary" id="analyzeBtn" style="margin-top: 20px;">Analyser l'image</button>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>Résultats de l'analyse</h2>
+            <div id="foodItemsList"></div>
+            
+            <h3 style="margin-top: 30px;">Valeurs nutritionnelles</h3>
+            <div class="nutrients-grid">
+                <div class="nutrient-card">
+                    <p>Calories</p>
+                    <p class="nutrient-value" id="caloriesValue">0</p>
+                    <p>kcal</p>
+                </div>
+                <div class="nutrient-card">
+                    <p>Protéines</p>
+                    <p class="nutrient-value" id="proteinValue">0</p>
+                    <p>g</p>
+                </div>
+                <div class="nutrient-card">
+                    <p>Glucides</p>
+                    <p class="nutrient-value" id="carbsValue">0</p>
+                    <p>g</p>
+                </div>
+                <div class="nutrient-card">
+                    <p>Lipides</p>
+                    <p class="nutrient-value" id="fatValue">0</p>
+                    <p>g</p>
+                </div>
+            </div>
+
+            <div class="health-alerts" id="healthAlerts">
+                <h3>Alertes santé</h3>
+                <div id="alertsList"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn primary" id="addToJournalBtn">Ajouter au journal alimentaire</button>
+                <button class="btn secondary" id="newAnalysisBtn">Nouvelle analyse</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Éléments du DOM
+            const uploadSection = document.getElementById('uploadSection');
+            const previewContainer = document.getElementById('previewContainer');
+            const resultsSection = document.getElementById('resultsSection');
+            const fileInput = document.getElementById('fileInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const takePhotoBtn = document.getElementById('takePhotoBtn');
+            const uploadPhotoBtn = document.getElementById('uploadPhotoBtn');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+            const addToJournalBtn = document.getElementById('addToJournalBtn');
+
+            // Gestion de l'upload d'image
+            uploadPhotoBtn.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        imagePreview.src = event.target.result;
+                        uploadSection.style.display = 'none';
+                        previewContainer.style.display = 'block';
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Simulation de l'analyse IA
+            analyzeBtn.addEventListener('click', function() {
+                // Simulation de chargement
+                analyzeBtn.textContent = 'Analyse en cours...';
+                analyzeBtn.disabled = true;
+                
+                // Simuler un délai d'analyse
+                setTimeout(function() {
+                    previewContainer.style.display = 'none';
+                    resultsSection.style.display = 'block';
+                    
+                    // Remplir avec des données simulées
+                    simulateAnalysisResults();
+                }, 2000);
+            });
+
+            // Nouvelle analyse
+            newAnalysisBtn.addEventListener('click', function() {
+                resultsSection.style.display = 'none';
+                uploadSection.style.display = 'block';
+                fileInput.value = '';
+            });
+
+            // Ajout au journal
+            addToJournalBtn.addEventListener('click', function() {
+                alert('Repas ajouté à votre journal alimentaire avec succès !');
+            });
+
+            // Simulation des résultats d'analyse
+            function simulateAnalysisResults() {
+                // Aliments détectés
+                const foodItems = [
+                    { name: "Poulet grillé", confidence: "90%", calories: 165, portion: "150g" },
+                    { name: "Riz complet", confidence: "85%", calories: 215, portion: "1 tasse" },
+                    { name: "Brocoli", confidence: "78%", calories: 55, portion: "100g" }
+                ];
+                
+                // Remplir la liste des aliments
+                const foodItemsList = document.getElementById('foodItemsList');
+                foodItemsList.innerHTML = '<h3>Aliments détectés</h3>';
+                
+                foodItems.forEach(item => {
+                    foodItemsList.innerHTML += `
+                        <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                            <p><strong>${item.name}</strong> (${item.confidence})</p>
+                            <p>Portion: ${item.portion} • ${item.calories} kcal</p>
+                        </div>
+                    `;
+                });
+                
+                // Valeurs nutritionnelles totales
+                document.getElementById('caloriesValue').textContent = 
+                    foodItems.reduce((sum, item) => sum + item.calories, 0);
+                document.getElementById('proteinValue').textContent = "32";
+                document.getElementById('carbsValue').textContent = "45";
+                document.getElementById('fatValue').textContent = "12";
+                
+                // Alertes santé (simulées en fonction d'un profil diabétique)
+                const alertsList = document.getElementById('alertsList');
+                alertsList.innerHTML = '';
+                
+                const alerts = [
+                    "Taux de glucides élevé pour un régime diabétique",
+                    "Considérez une portion plus petite de riz",
+                    "Excellent choix avec le brocoli, riche en fibres"
+                ];
+                
+                alerts.forEach(alert => {
+                    alertsList.innerHTML += `
+                        <div class="alert-item">
+                            <span class="alert-icon">⚠️</span>
+                            <p>${alert}</p>
+                        </div>
+                    `;
+                });
+                
+                // Afficher ou masquer la section des alertes
+                document.getElementById('healthAlerts').style.display = 
+                    alerts.length > 0 ? 'block' : 'none';
+            }
+
+            // Gestion de la prise de photo (simulée sur desktop)
+            takePhotoBtn.addEventListener('click', function() {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function(stream) {
+                            // Simulation - en réalité il faudrait afficher un flux vidéo et capturer une image
+                            alert("Fonctionnalité de caméra activée. Sur mobile, cette fonction permettrait de prendre une photo directement.");
+                            stream.getTracks().forEach(track => track.stop());
+                        })
+                        .catch(function(error) {
+                            console.error("Erreur d'accès à la caméra:", error);
+                            alert("Impossible d'accéder à la caméra. Veuillez télécharger une image à la place.");
+                        });
+                } else {
+                    alert("Votre appareil ne supporte pas l'accès direct à la caméra. Veuillez télécharger une image.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

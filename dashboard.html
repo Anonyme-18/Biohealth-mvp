@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord | BioHealth</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Biohealth</a>
+            <div class="nav-links">
+                <a href="accueil.html" >Accueil</a>
+                <a href="conseils.html">Conseils & Recettes</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="nutritionniste.html">Suivi Nutritionniste</a>
+                  <a  href="analyse.html">Analyse</a>
+                <a href="chatbot.html">Chatbot</a>
+                <a class="active" href="dashboard.html">Tableau de bord </a>
+            </div>
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+
+    <!-- En-tête de page -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Votre Tableau de Bord Santé</h1>
+            <p>Suivez vos progrès et obtenez des insights personnalisés</p>
+        </div>
+    </section>
+
+    <!-- Sélecteur de période -->
+    <div class="container">
+        <div class="date-selector">
+            <button class="date-btn active">7 jours</button>
+            <button class="date-btn">30 jours</button>
+            <button class="date-btn">3 mois</button>
+            <button class="date-btn">Personnalisée</button>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="dashboard-grid">
+            <!-- Carte 1: Score nutritionnel -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Votre score nutritionnel</h3>
+                    <div class="card-icon">⭐</div>
+                </div>
+                <div class="nutrition-score">
+                    <div class="score-value">82</div>
+                </div>
+                <p style="text-align: center; margin-top: 15px;">Votre alimentation est bonne, mais peut être améliorée</p>
+            </div>
+
+            <!-- Carte 2: Poids et mesures -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Poids et mesures</h3>
+                    <div class="card-icon">⚖️</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        Graphique d'évolution du poids
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Objectif poids</span>
+                        <span>68 kg / 72 kg</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 94%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 3: Glycémie et tension -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Glycémie & Tension</h3>
+                    <div class="card-icon">❤️</div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        Graphique de glycémie et tension
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Moyenne glycémie</span>
+                        <span>1.1 g/L</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%; background-color: var(--accent-color);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 4: Derniers repas -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Derniers repas</h3>
+                    <div class="card-icon">🍽️</div>
+                </div>
+                <div class="recent-meals">
+                    <div class="meal-item">
+                        <img src="images/mil-b.jpg" alt="Petit-déjeuner" class="meal-image">
+                        <div class="meal-info">
+                            <h4>Petit-déjeuner</h4>
+                            <p>Mil, Sucre, Lait</p>
+                        </div>
+                        <div class="meal-calories">320 kcal</div>
+                    </div>
+                    <div class="meal-item">
+                        <img src="images/dejeuner.jpg" alt="Déjeuner" class="meal-image">
+                        <div class="meal-info">
+                            <h4>Déjeuner</h4>
+                            <p>Poulet, riz, légumes</p>
+                        </div>
+                        <div class="meal-calories">550 kcal</div>
+                    </div>
+                    <div class="meal-item">
+                        <img src="images/salade.jpeg" alt="Dîner" class="meal-image">
+                        <div class="meal-info">
+                            <h4>Dîner</h4>
+                            <p>Salade de quinoa</p>
+                        </div>
+                        <div class="meal-calories">420 kcal</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 5: Objectifs -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Vos objectifs</h3>
+                    <div class="card-icon">🎯</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Calories quotidiennes</span>
+                        <span>1450 / 1800 kcal</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Activité physique</span>
+                        <span>3 / 5 jours</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Hydratation</span>
+                        <span>1.5 / 2 L</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 6: Recommandations -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3>Recommandations</h3>
+                    <div class="card-icon">💡</div>
+                </div>
+                <div class="recommendations">
+                    <div class="recommendation">
+                        <span class="recommendation-icon">🔹</span>
+                        <p>Augmentez votre consommation de légumes verts pour plus de fibres</p>
+                    </div>
+                    <div class="recommendation">
+                        <span class="recommendation-icon">🔹</span>
+                        <p>Votre glycémie est stable, continuez à limiter les sucres rapides</p>
+                    </div>
+                    <div class="recommendation">
+                        <span class="recommendation-icon">🔹</span>
+                        <p>Essayez une nouvelle activité physique cette semaine</p>
+                    </div>
+                    <div class="recommendation">
+                        <span class="recommendation-icon">🔹</span>
+                        <p>Pensez à programmer une consultation avec votre nutritionniste</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion du sélecteur de période
+            const dateButtons = document.querySelectorAll('.date-btn');
+            dateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    dateButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Ici, on pourrait charger les données pour la période sélectionnée
+                    console.log(`Période sélectionnée: ${this.textContent}`);
+                });
+            });
+            
+            // Simulation de données pour les graphiques (dans une vraie app, on utiliserait une librairie comme Chart.js)
+            setTimeout(() => {
+                // Simuler un chargement de données
+                const chartPlaceholders = document.querySelectorAll('.chart-placeholder');
+                chartPlaceholders.forEach(chart => {
+                    chart.innerHTML = '<p>Données chargées pour la période sélectionnée</p>';
+                    chart.style.color = 'var(--primary-color)';
+                    chart.style.fontWeight = '600';
+                });
+            }, 1500);
+            
+            // Animation du score nutritionnel
+            const scoreElement = document.querySelector('.score-value');
+            let score = 0;
+            const targetScore = 82;
+            const scoreInterval = setInterval(() => {
+                score += 2;
+                scoreElement.textContent = score;
+                
+                // Mettre à jour la couleur en fonction du score
+                const scoreColor = score < 50 ? 'var(--warning-color)' : 
+                                  score < 75 ? 'var(--accent-color)' : 'var(--primary-color)';
+                
+                document.querySelector('.nutrition-score').style.background = 
+                    `conic-gradient(${scoreColor} ${score}%, var(--gray) 0)`;
+                
+                if (score >= targetScore) {
+                    clearInterval(scoreInterval);
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
